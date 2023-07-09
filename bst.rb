@@ -58,9 +58,9 @@ class Tree
       return Node.new(val)
     elsif root.data < val
       # Remember to insert at the leaf, not the branch. I may need to refactor this.
-      root.left = insert(root.left, val)
-    elsif root.data > val
       root.right = insert(root.right, val)
+    elsif root.data > val
+      root.left = insert(root.left, val)
     end
 
     Node.new(val)
