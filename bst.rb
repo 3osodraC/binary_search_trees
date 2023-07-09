@@ -59,7 +59,7 @@ class Tree
     elsif root.data < val
       # Remember to insert at the leaf, not the branch. I may need to refactor this.
       root.left = insert(root.left, val)
-    elsif val > val
+    elsif root.data > val
       root.right = insert(root.right, val)
     end
 
@@ -74,5 +74,5 @@ class Tree
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-# bst.insert(33)
+bst.insert(33)
 p bst.pretty_print
