@@ -21,7 +21,7 @@ class Tree
     @root = build_tree(arr)
   end
 
-  # - Find middle element & make it the root of the tree.
+  # - Find middle element of the input array & make it the root of the tree.
   # - Perform the same operation with the left sub arr and make it the root's left child.
   # - Again, now with right sub arr, make it the right child.
   def build_tree(arr)
@@ -57,15 +57,12 @@ class Tree
     if root.data == val
       return Node.new(val)
     elsif root.data < val
-      # If this doesn't work make a dummy value if it isn't too detrimental
-      # to memory since this is recursive (Maybe i'm just tripping).
+      # Remember to insert at the leaf, not the branch. I may need to refactor this.
       root.left = insert(root.left, val)
     elsif val > val
       root.right = insert(root.right, val)
     end
 
-    # I probably should add another input, the node...
-    # or just put a Node.new(val) below.
     Node.new(val)
   end
 
