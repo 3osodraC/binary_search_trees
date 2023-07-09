@@ -43,6 +43,32 @@ class Tree
     root
   end
 
+  def delete(val)
+    # delete
+  end
+
+  def find(val)
+    # find
+  end
+
+  def insert(root = @root, val)
+    return nil if root.nil? # Or maybe return the value itself?
+
+    if root.data == val
+      return Node.new(val)
+    elsif root.data < val
+      # If this doesn't work make a dummy value if it isn't too detrimental
+      # to memory since this is recursive (Maybe i'm just tripping).
+      root.left = insert(root.left, val)
+    elsif val > val
+      root.right = insert(root.right, val)
+    end
+
+    # I probably should add another input, the node...
+    # or just put a Node.new(val) below.
+    Node.new(val)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -51,4 +77,5 @@ class Tree
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+# bst.insert(33)
 p bst.pretty_print
