@@ -52,18 +52,18 @@ class Tree
   end
 
   def insert(root = @root, val)
-    return nil if root.nil? # Or maybe return the value itself?
+    return Node.new(val) if root.nil?
+    return val if root.nil?
 
     if root.data == val
       return Node.new(val)
     elsif root.data < val
-      # Remember to insert at the leaf, not the branch. I may need to refactor this.
-      root.right = insert(root.right, val)
-    elsif root.data > val
       root.left = insert(root.left, val)
+    elsif root.data > val
+      root.right = insert(root.right, val)
     end
 
-    Node.new(val)
+    root
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
