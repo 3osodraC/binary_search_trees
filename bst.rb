@@ -57,7 +57,6 @@ class Tree
   # maintaining the branch-tree connection.
   def insert(head = @root, val)
     return Node.new(val) if head.nil?
-    return val if head.nil?
 
     if head.data == val
       return Node.new(val)
