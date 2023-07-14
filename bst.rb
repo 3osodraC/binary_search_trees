@@ -51,19 +51,23 @@ class Tree
     # find
   end
 
-  def insert(root = @root, val)
-    return Node.new(val) if root.nil?
-    return val if root.nil?
+  # Inserts values at the end of the tree by recursively
+  # comparing the current head with the current value,
+  # then returning the head when the recursion is done,
+  # maintaining the branch-tree connection.
+  def insert(head = @root, val)
+    return Node.new(val) if head.nil?
+    return val if head.nil?
 
-    if root.data == val
+    if head.data == val
       return Node.new(val)
-    elsif root.data < val
-      root.left = insert(root.left, val)
-    elsif root.data > val
-      root.right = insert(root.right, val)
+    elsif head.data < val
+      head.left = insert(head.left, val)
+    elsif head.data > val
+      head.right = insert(head.right, val)
     end
 
-    root
+    head
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
