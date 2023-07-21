@@ -43,19 +43,49 @@ class Tree
     root
   end
 
-  def delete(val)
-    # delete
+  # Deletes a node with the specified value from the BST.
+  # Handles cases for deletion when node has 0, 1, or 2 children.
+  def delete(val, head = @root)
+    return head if head.nil?
+
+    if head.data > val
+      head.left = delete(head.left, val)
+    elsif head.data < val
+      head.right = delete(head.right, val)
+    else
+      # Node to be deleted found
+
+      # Case 1: Node with one or no child
+      if head.left.nil?
+        tmp = head.right
+        head = nil
+        return tmp
+      elsif head.right.nil?
+        tmp = head.left
+        head = nil
+        return tmp
+      else
+        # Case 2: Node with two children
+        # Find the in-order successor (minimum value in right subtree)
+        nxt = head.right
+        while nxt.left
+          nxt = nxt.left
+        end
+
+        # Copy successor data to the current node
+        head.data = nxt.data
+
+        # Recursively delete the in-order successor from the right subtree
+        head.right = delete(head.right, nxt.data)
+      end
+    end
+
+    head
   end
 
-  def find(val)
-    # find
-  end
-
-  # Inserts values at the end of the tree by recursively
-  # comparing the current head with the current value,
-  # then returning the head when the recursion is done,
-  # maintaining the branch-tree connection.
-  def insert(head = @root, val)
+  # Inserts values at the end of the tree by recursively comparing the current head with
+  # the current value, then returning the head when the recursion is done.
+  def insert(val, head = @root)
     return Node.new(val) if head.nil?
 
     if head.data == val
@@ -76,6 +106,15 @@ class Tree
   end
 end
 
+# Testing grounds.
+
+# Create BST
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+
+# Insert value 33 in the BST
 bst.insert(33)
+p bst.pretty_print
+
+# Delete value 4 from the BST
+bst.delete(4)
 p bst.pretty_print
