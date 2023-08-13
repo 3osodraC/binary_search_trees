@@ -112,6 +112,20 @@ class Tree
     head
   end
 
+  # Prints the tree in level order by using a queue system.
+  def level_order(head = @root)
+    return if head.nil?
+
+    q = [head]
+
+    until q.empty?
+      current = q.shift
+      print "#{current.data} "
+      q.push(current.left) unless current.left.nil?
+      q.push(current.right) unless current.right.nil?
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -139,3 +153,7 @@ p bst.pretty_print
 # Find value 33
 puts "\nFind 33:\n\n"
 p bst.find(33)
+
+# Level order traversal
+puts "\nLevel order traversal\n\n"
+p bst.level_order
