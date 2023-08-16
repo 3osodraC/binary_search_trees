@@ -114,7 +114,6 @@ class Tree
   end
 
   # Performs level-order traversal starting from the given node (default: @root).
-  # Prints node data in the order they are encountered.
   # Uses a queue to process nodes level by level.
   def level_order(head = @root)
     return if head.nil?
@@ -123,8 +122,7 @@ class Tree
     result = []
     until q.empty?
       current = q.shift
-      result << current.data
-      yield current if block_given?
+      block_given? ? yield(current) : result << current.data
 
       q.push(current.left) unless current.left.nil?
       q.push(current.right) unless current.right.nil?
@@ -137,6 +135,17 @@ class Tree
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
+  # Preorder: (root, left subtree, right subtree).
+  # Performs preorder traversal starting from the given node (default: @root).
+  def preorder(head = @root, result = [])
+    return result if head.nil?
+
+    block_given? ? yield(head) : result << head.data
+    preorder(head.left, result)
+    preorder(head.right, result)
+    result
   end
 end
 
@@ -164,3 +173,7 @@ p bst.find(33)
 # Level order traversal
 puts "\nLevel order traversal\n\n"
 p bst.level_order
+
+# Preorder traversal
+puts "\nPreorder traversal\n\n"
+p bst.preorder
