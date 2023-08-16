@@ -83,7 +83,8 @@ class Tree
     head
   end
 
-  # Finds node in BST.
+  # Recursively finds a value in a binary tree.
+  # Returns the node containing the value, or nil if not found.
   def find(head = @root, val)
     return head if head.nil? || head.data == val
 
@@ -112,18 +113,24 @@ class Tree
     head
   end
 
-  # Prints the tree in level order by using a queue system.
+  # Performs level-order traversal starting from the given node (default: @root).
+  # Prints node data in the order they are encountered.
+  # Uses a queue to process nodes level by level.
   def level_order(head = @root)
     return if head.nil?
 
     q = [head]
-
+    result = []
     until q.empty?
       current = q.shift
-      print "#{current.data} "
+      result << current.data
+      yield current if block_given?
+
       q.push(current.left) unless current.left.nil?
       q.push(current.right) unless current.right.nil?
     end
+
+    result
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
