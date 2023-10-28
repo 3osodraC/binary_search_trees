@@ -97,6 +97,17 @@ class Tree
     head
   end
 
+  # Postorder: (left subtree, root, right subtree).
+  # Performs postorder traversal starting from the given node (default: @root).
+  def inorder(head = @root, result = [])
+    return result if head.nil?
+
+    inorder(head.left, result)
+    block_given? ? yield(head) : result << head.data
+    inorder(head.right, result)
+    result
+  end
+
   # Inserts values at the end of the tree by recursively comparing the current head with
   # the current value, then returning the head when the recursion is done.
   def insert(head = @root, val)
@@ -131,6 +142,17 @@ class Tree
     result
   end
 
+  # Postorder: (left subtree, right subtree, root).
+  # Performs postorder traversal starting from the given node (default: @root).
+  def postorder(head = @root, result = [])
+    return result if head.nil?
+
+    postorder(head.left, result)
+    postorder(head.right, result)
+    block_given? ? yield(head) : result << head.data
+    result
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -156,16 +178,6 @@ bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 puts "\nBST created:\n\n"
 p bst.pretty_print
 
-# Insert value 33 in the BST
-puts "\nInsert 33:\n\n"
-bst.insert(33)
-p bst.pretty_print
-
-# Delete value 4 from the BST
-puts "\nDelete 4:\n\n"
-bst.delete(4)
-p bst.pretty_print
-
 # Find value 33
 puts "\nFind 33:\n\n"
 p bst.find(33)
@@ -177,3 +189,22 @@ p bst.level_order
 # Preorder traversal
 puts "\nPreorder traversal\n\n"
 p bst.preorder
+
+# Inorder traversal
+puts "\nInorder traversal\n\n"
+p bst.inorder
+
+# Postorder traversal
+puts "\nPostorder traversal\n\n"
+p bst.postorder
+
+# Insert value 33 in the BST
+puts "\nInsert 33:\n\n"
+bst.insert(33)
+p bst.pretty_print
+
+# Delete value 4 from the BST
+puts "\nDelete 4:\n\n"
+bst.delete(4)
+p bst.pretty_print
+
