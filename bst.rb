@@ -85,16 +85,28 @@ class Tree
 
   # Recursively finds a value in a binary tree.
   # Returns the node containing the value, or nil if not found.
-  def find(head = @root, val)
+  def find(val, head = @root)
     return head if head.nil? || head.data == val
 
-    if head.data < val
-      return find(head.left, val)
+    if val < head.data
+      return find(val, head.left)
     else
-      return find(head.right, val)
+      return find(val, head.right)
     end
+  end
 
-    head
+  # I need to start from given value, then count the most i can go down from there.
+  def height(head = @root)
+    return -1 if head.nil?
+
+    height_l = height(head.left)
+    height_r = height(head.right)
+
+    if height_l > height_r
+      height_l + 1
+    else
+      height_r + 1
+    end
   end
 
   # Postorder: (left subtree, root, right subtree).
@@ -178,10 +190,6 @@ bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 puts "\nBST created:\n\n"
 p bst.pretty_print
 
-# Find value 33
-puts "\nFind 33:\n\n"
-p bst.find(33)
-
 # Level order traversal
 puts "\nLevel order traversal\n\n"
 p bst.level_order
@@ -203,8 +211,15 @@ puts "\nInsert 33:\n\n"
 bst.insert(33)
 p bst.pretty_print
 
+# Find value 33
+puts "\nFind 67:\n\n"
+p bst.find(67)
+
 # Delete value 4 from the BST
 puts "\nDelete 4:\n\n"
 bst.delete(4)
 p bst.pretty_print
 
+# Height of 5
+puts "\nHeight of 5:\n\n"
+p bst.height(bst.find(67))
