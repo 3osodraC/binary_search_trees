@@ -221,5 +221,5 @@ bst.delete(4)
 p bst.pretty_print
 
 # Height of 5
-puts "\nHeight of 5:\n\n"
+puts "\nHeight of 67:\n\n"
 p bst.height(bst.find(67))
